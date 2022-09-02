@@ -35,6 +35,10 @@ export const factories = {
 			return faker.name.fullName();
 		},
 
+		title() {
+			return faker.name.jobTitle();
+		},
+
 		age() {
 			return faker.datatype.number({ min: 20, max: 60 });
 		},

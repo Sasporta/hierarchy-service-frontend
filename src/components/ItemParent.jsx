@@ -4,7 +4,7 @@ import { apiReq } from '../utils/api';
 import EmployeeCard from './EmployeeCard';
 import { chooseParent, setChildren } from '../redux/hierarchy';
 
-const ItemParent = ({ uuid, name, age, isBigCard }) => {
+const ItemParent = ({ uuid, isBigCard, ...props }) => {
 	const { parent } = useSelector(({ hierarchyList }) => hierarchyList);
 	const dispatch = useDispatch();
 
@@ -15,17 +15,16 @@ const ItemParent = ({ uuid, name, age, isBigCard }) => {
 
 		dispatch(setChildren(employees));
 
-		dispatch(chooseParent({ uuid, name, age }));
+		dispatch(chooseParent({ uuid, ...props }));
 	};
 
 	return (
 		<EmployeeCard
-			age={age}
 			uuid={uuid}
-			name={name}
 			onClick={onClick}
 			chosen={isChosen()}
 			isBigCard={isBigCard}
+			{...props}
 		/>
 	);
 };

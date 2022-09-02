@@ -10,6 +10,6 @@ export const serializers = {
 	employee: Serializer.extend({
 		embed: true,
 		root: false,
-		attrs: ['uuid', 'name', 'age'],
+		attrs: ['uuid', 'name', 'title', 'age'],
 	}),
 };

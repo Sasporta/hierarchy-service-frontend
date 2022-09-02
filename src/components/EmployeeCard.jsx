@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Paper } from '@mui/material';
 
-const EmployeeCard = ({ uuid, name, age, isBigCard, onClick, chosen }) => {
+const EmployeeCard = ({ uuid, name, title, isBigCard, onClick, chosen }) => {
 	return (
 		<CardContainer
 			elevation={10}
@@ -11,8 +11,9 @@ const EmployeeCard = ({ uuid, name, age, isBigCard, onClick, chosen }) => {
 		>
 			{!isBigCard && <CardCover />}
 			<CardContent>
-				<CardTitle isSmallCard={!isBigCard}>{name}</CardTitle>
 				<CardLogo url={`https://robohash.org/${uuid}`}></CardLogo>
+				<EmployeeName isSmallCard={!isBigCard}>{name}</EmployeeName>
+				<EmployeeTitle isSmallCard={!isBigCard}>{title}</EmployeeTitle>
 			</CardContent>
 		</CardContainer>
 	);
@@ -22,7 +23,6 @@ export default EmployeeCard;
 
 const CardContainer = styled(Paper)`
 	border-radius: 20px;
-	font-weight: bold;
 	margin: 15px;
 	padding: 5px;
 	${({ chosen }) => chosen && 'display: none;'}
@@ -33,6 +33,12 @@ const CardContainer = styled(Paper)`
 	`}
 
 	-webkit-transform: translateZ(0);
+
+	&:hover {
+		cursor: pointer;
+		transform: scale(1.2);
+		transition: 0.5s;
+	}
 `;
 
 const CardCover = styled.div`
@@ -56,15 +62,38 @@ const CardContent = styled.div`
 	flex-direction: column;
 `;
 
-const CardTitle = styled.div`
-	text-align: center;
-	${({ isSmallCard }) => isSmallCard && 'font-size: 13px;'};
-`;
-
 const CardLogo = styled.div`
 	background-image: url(${({ url }) => url});
 	background-position: center;
 	background-size: cover;
+	border: 1px #2ab5d3 solid;
+	border-radius: 15px;
 	height: 100%;
+	margin-bottom: 5px;
 	width: 100%;
+`;
+
+const EmployeeName = styled.div`
+	font-size: 15px;
+	margin-bottom: 5px;
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	min-height: ${({ isSmallCard }) => isSmallCard ? '14px' : '18px'};
+	white-space: nowrap;
+	width: 100%;
+	${({ isSmallCard }) => isSmallCard && 'font-size: 12px;'}
+`;
+
+const EmployeeTitle = styled.div`
+	color: #818181;
+	font-size: 14px;
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	min-height: ${({ isSmallCard }) => (isSmallCard ? '13px' : '16px')};
+	padding: 0 10px;
+	white-space: nowrap;
+	width: 100%;
+	${({ isSmallCard }) => isSmallCard && 'font-size: 11px;'};
 `;
