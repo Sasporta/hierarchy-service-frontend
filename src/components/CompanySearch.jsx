@@ -1,15 +1,42 @@
 import styled from '@emotion/styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilteredCompanies } from '../redux/companies';
 
-const CompanySearch = () => (
+const CompanySearch = () => {
+	const { companies } = useSelector(({ companiesList }) => companiesList);
+
+	const dispatch = useDispatch();
+
+	let filterTimeout;
+
+	const companiesFilterDebouncing = ({ target: { value: query } }) => {
+		clearTimeout(filterTimeout);
+
+		filterTimeout = setTimeout(() => {
+			dispatch(
+				setFilteredCompanies(
+					companies.filter(c =>
+						c.name.toLowerCase().includes(query.toLowerCase()),
+					),
+				),
+			);
+		}, 500);
+	};
+
+	return (
 		<HeaderContainer>
-			<Input placeholder="Search your company..." />
+			<Input
+				placeholder="Search your company..."
+				onChange={companiesFilterDebouncing}
+			/>
 		</HeaderContainer>
 	);
+};
 
 export default CompanySearch;
 
 const HeaderContainer = styled.div`
-  display: flex;
+	display: flex;
 	margin: 0 auto;
 	max-width: 1380px;
 	padding: 0 25px;

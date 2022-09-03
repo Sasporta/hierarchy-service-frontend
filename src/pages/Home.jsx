@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { apiReq } from '../utils/api';
 import Header from '../components/Header';
 import HOCSpinner from '../components/HOCSpinner';
-import { setCompanies } from '../redux/companies';
+import { setCompanies, setFilteredCompanies } from '../redux/companies';
 import { setLoadingCompanies } from '../redux/loading';
 import CompaniesGrid from '../components/CompaniesGrid';
 import CompanySearch from '../components/CompanySearch';
@@ -24,6 +24,8 @@ const Home = () => {
 				const companies = await apiReq('/companies');
 
 				dispatch(setCompanies(companies));
+				dispatch(setFilteredCompanies(companies));
+
 
 				dispatch(setLoadingCompanies(false));
 			};
