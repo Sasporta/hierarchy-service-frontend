@@ -5,11 +5,11 @@ const EmployeeCard = ({ uuid, name, title, isBigCard, onClick, chosen }) => {
 	return (
 		<CardContainer
 			elevation={10}
-			chosen={chosen ? 'display: none;' : ''}
-			onClick={onClick}
+			chosen={chosen}
+			onClick={() => !chosen && onClick && onClick()}
 			proportion={isBigCard ? '200px' : '100px'}
 		>
-			{!isBigCard && <CardCover />}
+			{!isBigCard && !chosen && <CardCover />}
 			<CardContent>
 				<CardLogo url={`https://robohash.org/${uuid}`}></CardLogo>
 				<EmployeeName isSmallCard={!isBigCard}>{name}</EmployeeName>
@@ -25,7 +25,6 @@ const CardContainer = styled(Paper)`
 	border-radius: 20px;
 	margin: 15px;
 	padding: 5px;
-	${({ chosen }) => chosen && 'display: none;'}
 	${({ proportion }) => `
 		height: ${proportion};
 		width: ${proportion};
@@ -36,7 +35,7 @@ const CardContainer = styled(Paper)`
 
 	&:hover {
 		cursor: pointer;
-		transform: scale(1.2);
+		transform: scale(1.1);
 		transition: 0.5s;
 	}
 `;
@@ -79,7 +78,7 @@ const EmployeeName = styled.div`
 	overflow: hidden;
 	text-align: center;
 	text-overflow: ellipsis;
-	min-height: ${({ isSmallCard }) => isSmallCard ? '14px' : '18px'};
+	min-height: ${({ isSmallCard }) => (isSmallCard ? '14px' : '18px')};
 	white-space: nowrap;
 	width: 100%;
 	${({ isSmallCard }) => isSmallCard && 'font-size: 12px;'}

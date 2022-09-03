@@ -5,16 +5,21 @@ import { useDispatch } from 'react-redux';
 
 import { apiReq } from '../utils/api';
 import { setGrandparents } from '../redux/hierarchy';
+import { setLoadingGrandparents } from '../redux/loading';
 
 const CompanyItem = ({ uuid, title, imgUrl }) => {
 	const dispatch = useDispatch();
 
 	const onClick = async () => {
+		dispatch(setLoadingGrandparents(true));
+
 		const employees = await apiReq(
 			`/employees?companyUuid=${uuid}&managerUuid=null`,
 		);
 
 		dispatch(setGrandparents(employees));
+
+		dispatch(setLoadingGrandparents(false));
 	};
 
 	return (

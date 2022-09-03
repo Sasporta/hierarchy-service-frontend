@@ -1,6 +1,6 @@
 export function routes() {
 	this.urlPrefix = process.env.REACT_APP_PROD_URL;
-	this.timing = 100;
+	this.timing = 400;
 
 	this.get('/companies', (schema, { queryParams: { limit } }) => {
 		return schema.companies.all();

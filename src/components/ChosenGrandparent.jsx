@@ -10,6 +10,11 @@ import {
 	setGrandparents,
 	setParents,
 } from '../redux/hierarchy';
+import {
+	setLoadingChildren,
+	setLoadingGrandparents,
+	setLoadingParents,
+} from '../redux/loading';
 
 const ChosenGrandparent = () => {
 	const { grandparents, parents, grandparent } = useSelector(
@@ -19,6 +24,16 @@ const ChosenGrandparent = () => {
 	const dispatch = useDispatch();
 
 	const onClick = async () => {
+		dispatch(chooseParent(null));
+
+		dispatch(chooseGrandparent(null));
+
+		dispatch(setLoadingGrandparents(true));
+
+		dispatch(setLoadingParents(true));
+
+		dispatch(setLoadingChildren(true));
+
 		const newGrandparent = await apiReq(
 			`/employees/parent/${grandparent.uuid}`,
 		);
@@ -28,21 +43,27 @@ const ChosenGrandparent = () => {
 				`/employees/parent-and-uncles/${grandparent.uuid}`,
 			);
 
-			dispatch(setChildren(parents));
+			dispatch(chooseGrandparent(newGrandparent));
+
+			dispatch(setGrandparents(newGrandparents));
 
 			dispatch(chooseParent(grandparent));
 
 			dispatch(setParents(grandparents));
 
-			dispatch(chooseGrandparent(newGrandparent));
-
-			dispatch(setGrandparents(newGrandparents));
+			dispatch(setChildren(parents));
 		}
+
+		dispatch(setLoadingGrandparents(false));
+
+		dispatch(setLoadingParents(false));
+
+		dispatch(setLoadingChildren(false));
 	};
 
 	return (
 		<EmployeeContainer onClick={onClick}>
-			<EmployeeCard {...grandparent} isBigCard={true} onClick={onClick} />
+			<EmployeeCard {...grandparent} isBigCard={true} />
 		</EmployeeContainer>
 	);
 };

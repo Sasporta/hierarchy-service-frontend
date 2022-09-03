@@ -1,26 +1,11 @@
 import styled from '@emotion/styled';
 import { Grid } from '@mui/material';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { apiReq } from '../utils/api';
 import CompanyItem from './CompanyItem';
-import { setCompanies } from '../redux/companies';
 
 const CompaniesGrid = () => {
 	const { companies } = useSelector(({ companiesList }) => companiesList);
-
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		const fetchCompanies = async () => {
-			const companies = await apiReq('/companies');
-
-			dispatch(setCompanies(companies));
-		};
-
-		fetchCompanies();
-	}, []);
 
 	return (
 		<GridContainer>

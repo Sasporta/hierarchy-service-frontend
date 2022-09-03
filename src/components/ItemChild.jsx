@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { apiReq } from '../utils/api';
 import EmployeeCard from './EmployeeCard';
+import { setLoadingChildren } from '../redux/loading';
 import {
 	chooseGrandparent,
 	chooseParent,
@@ -17,15 +18,21 @@ const ItemChild = ({ uuid, isBigCard, ...props }) => {
 	const dispatch = useDispatch();
 
 	const onClick = async () => {
+		dispatch(setLoadingChildren(true));
+
 		dispatch(chooseGrandparent(parent));
+
 		dispatch(setGrandparents(parents));
 
 		dispatch(chooseParent({ uuid, ...props }));
+
 		dispatch(setParents(children));
 
 		const employees = await apiReq(`/employees?managerUuid=${uuid}`);
 
 		dispatch(setChildren(employees));
+
+		dispatch(setLoadingChildren(false));
 	};
 
 	return (

@@ -1,5 +1,5 @@
-import SiblingNonScrollableList from './SiblingNonScrollableList';
 import SiblingScrollableList from './SiblingScrollableList';
+import SiblingNonScrollableList from './SiblingNonScrollableList';
 
 const HOCSiblingList = (ScrollableList, NonScrollableList) => props => {
 	return props.overFlow ? (

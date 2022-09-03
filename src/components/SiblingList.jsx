@@ -3,7 +3,7 @@ import { WrappedSiblingList } from './HOCSiblingList';
 const SiblingList = ({ level, employees, isBigCards }) => {
 	const listOverFlow =
 		(isBigCards && employees.length > 5) ||
-		(!isBigCards && employees.length > 7);
+		(!isBigCards && employees.length > 9);
 
 	return (
 		<WrappedSiblingList

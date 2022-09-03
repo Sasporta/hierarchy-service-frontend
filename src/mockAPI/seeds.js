@@ -11,7 +11,7 @@ export const seeds = server => {
 	server.createList('employee', 6, { manager_id: 2 }); // ids: 7-12
 
 	// parents from grandparent id=3
-	server.createList('employee', 9, { manager_id: 3 }); // ids: 13-21
+	server.createList('employee', 10, { manager_id: 3 }); // ids: 13-21
 
 	// children from parent id=4
 	server.createList('employee', 3, { manager_id: 4 }); // ids: 22,23,24
