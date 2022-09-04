@@ -8,6 +8,7 @@ export const hierarchySlice = createSlice({
 		children: [],
 		grandparent: null,
 		parent: null,
+		topHierarchy: [],
 	},
 	reducers: {
 		setGrandparents: (state, action) => {
@@ -19,11 +20,14 @@ export const hierarchySlice = createSlice({
 		setChildren: (state, action) => {
 			state.children = action.payload;
 		},
-		chooseGrandparent: (state, action) => {
+		setGrandparent: (state, action) => {
 			state.grandparent = action.payload;
 		},
-		chooseParent: (state, action) => {
+		setParent: (state, action) => {
 			state.parent = action.payload;
+		},
+		setTopHierarchy: (state, action) => {
+			state.topHierarchy = action.payload;
 		},
 	},
 });
@@ -32,8 +36,9 @@ export const {
 	setGrandparents,
 	setParents,
 	setChildren,
-	chooseGrandparent,
-	chooseParent,
+	setGrandparent,
+	setParent,
+	setTopHierarchy,
 } = hierarchySlice.actions;
 
 export default hierarchySlice.reducer;

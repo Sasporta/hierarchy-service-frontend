@@ -4,9 +4,9 @@ import { apiReq } from '../utils/api';
 import EmployeeCard from './EmployeeCard';
 import { setLoadingChildren } from '../redux/loading';
 import {
-	chooseGrandparent,
-	chooseParent,
 	setChildren,
+	setParent,
+	setGrandparent,
 	setGrandparents,
 	setParents,
 } from '../redux/hierarchy';
@@ -20,11 +20,11 @@ const ItemChild = ({ uuid, isBigCard, ...props }) => {
 	const onClick = async () => {
 		dispatch(setLoadingChildren(true));
 
-		dispatch(chooseGrandparent(parent));
+		dispatch(setGrandparent(parent));
 
 		dispatch(setGrandparents(parents));
 
-		dispatch(chooseParent({ uuid, ...props }));
+		dispatch(setParent({ uuid, ...props }));
 
 		dispatch(setParents(children));
 

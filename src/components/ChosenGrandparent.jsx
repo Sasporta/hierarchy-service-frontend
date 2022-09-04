@@ -3,51 +3,40 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { apiReq } from '../utils/api';
 import EmployeeCard from './EmployeeCard';
+import { setLoadingGrandparents } from '../redux/loading';
 import {
-	chooseGrandparent,
-	chooseParent,
+	setGrandparent,
+	setParent,
 	setChildren,
 	setGrandparents,
 	setParents,
 } from '../redux/hierarchy';
-import {
-	setLoadingChildren,
-	setLoadingGrandparents,
-	setLoadingParents,
-} from '../redux/loading';
 
 const ChosenGrandparent = () => {
-	const { grandparents, parents, grandparent } = useSelector(
+	const { grandparents, parents, grandparent, topHierarchy } = useSelector(
 		({ hierarchyList }) => hierarchyList,
 	);
 
 	const dispatch = useDispatch();
 
 	const onClick = async () => {
-		dispatch(chooseParent(null));
+		dispatch(setGrandparent(null));
 
-		dispatch(chooseGrandparent(null));
+		dispatch(setParent(null));
 
 		dispatch(setLoadingGrandparents(true));
 
-		dispatch(setLoadingParents(true));
+		if (!topHierarchy.includes(grandparent.uuid)) {
+			const [newGrandparent, newGrandparents] = await Promise.all([
+				apiReq(`/employees/parent/${grandparent.uuid}`),
+				apiReq(`/employees/parent-and-uncles/${grandparent.uuid}`),
+			]);
 
-		dispatch(setLoadingChildren(true));
-
-		const newGrandparent = await apiReq(
-			`/employees/parent/${grandparent.uuid}`,
-		);
-
-		if (newGrandparent) {
-			const newGrandparents = await apiReq(
-				`/employees/parent-and-uncles/${grandparent.uuid}`,
-			);
-
-			dispatch(chooseGrandparent(newGrandparent));
+			dispatch(setGrandparent(newGrandparent));
 
 			dispatch(setGrandparents(newGrandparents));
 
-			dispatch(chooseParent(grandparent));
+			dispatch(setParent(grandparent));
 
 			dispatch(setParents(grandparents));
 
@@ -55,10 +44,6 @@ const ChosenGrandparent = () => {
 		}
 
 		dispatch(setLoadingGrandparents(false));
-
-		dispatch(setLoadingParents(false));
-
-		dispatch(setLoadingChildren(false));
 	};
 
 	return (

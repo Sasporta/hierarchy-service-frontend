@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { apiReq } from '../utils/api';
-import { setGrandparents } from '../redux/hierarchy';
+import { setGrandparents, setTopHierarchy } from '../redux/hierarchy';
 import { setLoadingGrandparents } from '../redux/loading';
 
 const CompanyItem = ({ uuid, title, imgUrl }) => {
@@ -18,6 +18,8 @@ const CompanyItem = ({ uuid, title, imgUrl }) => {
 		);
 
 		dispatch(setGrandparents(employees));
+
+		dispatch(setTopHierarchy(employees.map(e => e.uuid)));
 
 		dispatch(setLoadingGrandparents(false));
 	};

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { apiReq } from '../utils/api';
 import EmployeeCard from './EmployeeCard';
 import { setLoadingChildren } from '../redux/loading';
-import { chooseParent, setChildren } from '../redux/hierarchy';
+import { setParent, setChildren } from '../redux/hierarchy';
 
 const ItemParent = ({ uuid, isBigCard, ...props }) => {
 	const { parent } = useSelector(({ hierarchyList }) => hierarchyList);
@@ -14,7 +14,7 @@ const ItemParent = ({ uuid, isBigCard, ...props }) => {
 	const onClick = async () => {
 		dispatch(setLoadingChildren(true));
 
-		dispatch(chooseParent({ uuid, ...props }));
+		dispatch(setParent({ uuid, ...props }));
 
 		const employees = await apiReq(`/employees?managerUuid=${uuid}`);
 

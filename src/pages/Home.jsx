@@ -5,33 +5,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import { apiReq } from '../utils/api';
 import Header from '../components/Header';
 import HOCSpinner from '../components/HOCSpinner';
-import { setCompanies, setFilteredCompanies } from '../redux/companies';
 import { setLoadingCompanies } from '../redux/loading';
 import CompaniesGrid from '../components/CompaniesGrid';
 import CompanySearch from '../components/CompanySearch';
+import { setCompanies, setFilteredCompanies } from '../redux/companies';
 
 const WrappedCompaniesGrid = HOCSpinner(CompaniesGrid);
 
 const Home = () => {
+	const { companies } = useSelector(({ companiesList }) => companiesList);
+
 	const { loadingCompanies } = useSelector(
 		({ loadingProcess }) => loadingProcess,
 	);
 
-		const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-		useEffect(() => {
-			const fetchCompanies = async () => {
-				const companies = await apiReq('/companies');
+	useEffect(() => {
+		const fetchCompanies = async () => {
+			const fetchedCompanies = await apiReq('/companies');
 
-				dispatch(setCompanies(companies));
-				dispatch(setFilteredCompanies(companies));
+			dispatch(setCompanies(fetchedCompanies));
 
+			dispatch(setLoadingCompanies(false));
+		};
 
-				dispatch(setLoadingCompanies(false));
-			};
+		fetchCompanies();
+	}, []);
 
-			fetchCompanies();
-		}, []);
+	useEffect(() => {
+		dispatch(setFilteredCompanies(companies));
+	}, [companies]);
 
 	return (
 		<>
