@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
+import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { apiReq } from '../utils/api';
@@ -19,6 +20,8 @@ const Home = () => {
 		({ loadingProcess }) => loadingProcess,
 	);
 
+	const [searchParams] = useSearchParams();
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -34,7 +37,15 @@ const Home = () => {
 	}, []);
 
 	useEffect(() => {
-		dispatch(setFilteredCompanies(companies));
+		const query = searchParams.get('searchQuery') || '';
+		console.log(query);
+		dispatch(
+			setFilteredCompanies(
+				companies.filter(c =>
+					c.name.toLowerCase().includes(query.toLowerCase()),
+				),
+			),
+		);
 	}, [companies]);
 
 	return (

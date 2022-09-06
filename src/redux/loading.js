@@ -4,31 +4,19 @@ export const loadingSlice = createSlice({
 	name: 'loading',
 	initialState: {
 		loadingCompanies: true,
-		loadingGrandparents: null,
-		loadingParents: null,
-		loadingChildren: null,
+		loadingEmployees: null,
 	},
 	reducers: {
 		setLoadingCompanies: (state, action) => {
 			state.loadingCompanies = action.payload;
 		},
-		setLoadingGrandparents: (state, action) => {
-			state.loadingGrandparents = action.payload;
-		},
-		setLoadingParents: (state, action) => {
-			state.loadingParents = action.payload;
-		},
-		setLoadingChildren: (state, action) => {
-			state.loadingChildren = action.payload;
+		setLoadingEmployees: (state, action) => {
+			state.loadingEmployees = action.payload;
 		},
 	},
 });
 
-export const {
-	setLoadingCompanies,
-	setLoadingGrandparents,
-	setLoadingParents,
-	setLoadingChildren,
-} = loadingSlice.actions;
+export const { setLoadingCompanies, setLoadingEmployees } =
+	loadingSlice.actions;
 
 export default loadingSlice.reducer;

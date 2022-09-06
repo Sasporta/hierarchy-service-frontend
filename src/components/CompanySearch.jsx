@@ -1,11 +1,18 @@
 import styled from '@emotion/styled';
+import { useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { setFilteredCompanies } from '../redux/companies';
 
 const CompanySearch = () => {
 	const { companies } = useSelector(({ companiesList }) => companiesList);
 
+	const [searchParams, setSearchParams] = useSearchParams();
+
 	const dispatch = useDispatch();
+
+	const input = useRef();
 
 	let filterTimeout;
 
@@ -13,6 +20,8 @@ const CompanySearch = () => {
 		clearTimeout(filterTimeout);
 
 		filterTimeout = setTimeout(() => {
+			setSearchParams({ searchQuery: query });
+
 			dispatch(
 				setFilteredCompanies(
 					companies.filter(c =>
@@ -23,9 +32,14 @@ const CompanySearch = () => {
 		}, 500);
 	};
 
+	useEffect(() => {
+		input.current.value = searchParams.get('searchQuery') || '';
+	}, []);
+
 	return (
 		<HeaderContainer>
 			<Input
+				ref={input}
 				placeholder="Search your company..."
 				onChange={companiesFilterDebouncing}
 			/>

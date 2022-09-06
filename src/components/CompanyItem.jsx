@@ -4,30 +4,38 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { apiReq } from '../utils/api';
-import { setGrandparents, setTopHierarchy } from '../redux/hierarchy';
-import { setLoadingGrandparents } from '../redux/loading';
+import {
+	setCompany,
+	setHierarchy,
+	setHierarchyLevel,
+} from '../redux/hierarchy';
 
-const CompanyItem = ({ uuid, title, imgUrl }) => {
+const CompanyItem = ({ uuid, name, imgUrl }) => {
 	const dispatch = useDispatch();
 
 	const onClick = async () => {
-		dispatch(setLoadingGrandparents(true));
+		dispatch(setCompany({ uuid, name }));
+
+		dispatch(setHierarchyLevel(1));
+
+		dispatch(setHierarchy({ level: 1, employees: null }));
 
 		const employees = await apiReq(
 			`/employees?companyUuid=${uuid}&managerUuid=null`,
 		);
 
-		dispatch(setGrandparents(employees));
-
-		dispatch(setTopHierarchy(employees.map(e => e.uuid)));
-
-		dispatch(setLoadingGrandparents(false));
+		dispatch(
+			setHierarchy({
+				level: 1,
+				employees: employees.map(e => ({ level: 1, chosen: true, ...e })),
+			}),
+		);
 	};
 
 	return (
-		<Link to={'/hierarchy'}>
+		<Link to={`/hierarchy/${uuid}`}>
 			<CompanyContainer elevation={24} onClick={onClick}>
-				<CompanyCover>{title}</CompanyCover>
+				<CompanyCover>{name}</CompanyCover>
 				<CompanyLogo url={imgUrl} />
 			</CompanyContainer>
 		</Link>

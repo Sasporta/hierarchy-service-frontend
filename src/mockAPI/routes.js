@@ -6,6 +6,11 @@ export function routes() {
 		return schema.companies.all();
 	});
 
+
+	this.get('/companies/:id', (schema, { params: { id } }) => {
+		return schema.companies.find(id);
+	});
+
 	this.get(
 		'/employees',
 		(schema, { queryParams: { companyUuid, managerUuid, limit } }) => {
@@ -31,35 +36,6 @@ export function routes() {
 			}
 
 			return schema.employees.where(query);
-		},
-	);
-
-  this.get('/employees/parent/:id', (schema, { params: { id: uuid } }) => {
-    const employee = schema.employees.findBy({ uuid });
-
-		return schema.employees.findBy({ id: employee.manager_id });
-	});
-
-	this.get(
-		'/employees/parent-and-uncles/:id',
-		(schema, { params: { id: uuid } }) => {
-      const child = schema.employees.findBy({ uuid });
-
-			const parent = schema.employees.findBy({ id: child.manager_id });
-
-			if (!parent) return null;
-
-			const grandparent = schema.employees.findBy({ id: parent.manager_id });
-
-			if (!grandparent)
-				return schema.employees.where({
-					company_id: parent.company_id,
-					manager_id: null,
-				});
-
-			return schema.employees.where({
-				manager_id: grandparent.id,
-			});
 		},
 	);
 }

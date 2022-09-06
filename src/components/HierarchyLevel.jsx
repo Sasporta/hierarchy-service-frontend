@@ -1,22 +1,21 @@
 import styled from '@emotion/styled';
+import HierarchyItem from './HierarchyItem';
 
-import { EmployeeList } from './HOCEmployeeList';
-
-const SiblingNonScrollableList = props => {
+const HierarchyLevel = ({ employees }) => {
 	return (
 		<EmployeesContainer>
-			<EmployeeList {...props} />
+			{employees.map(({ uuid, ...employee }) => (
+				<HierarchyItem key={uuid} uuid={uuid} {...employee} />
+			))}
 		</EmployeesContainer>
 	);
 };
 
-export default SiblingNonScrollableList;
+export default HierarchyLevel;
 
 const EmployeesContainer = styled.div`
-	transition: 3s;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	margin-bottom: 25px;
-	scroll-behavior: smooth;
 `;

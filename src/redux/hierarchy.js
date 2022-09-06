@@ -3,42 +3,24 @@ import { createSlice } from '@reduxjs/toolkit';
 export const hierarchySlice = createSlice({
 	name: 'hierarchy',
 	initialState: {
-		grandparents: [],
-		parents: [],
-		children: [],
-		grandparent: null,
-		parent: null,
-		topHierarchy: [],
+		company: null,
+		hierarchy: {},
+		hierarchyLevel: null,
 	},
 	reducers: {
-		setGrandparents: (state, action) => {
-			state.grandparents = action.payload;
+		setCompany: (state, action) => {
+			state.company = action.payload;
 		},
-		setParents: (state, action) => {
-			state.parents = action.payload;
+		setHierarchy: (state, { payload }) => {
+			state.hierarchy[payload.level] = payload.employees;
 		},
-		setChildren: (state, action) => {
-			state.children = action.payload;
-		},
-		setGrandparent: (state, action) => {
-			state.grandparent = action.payload;
-		},
-		setParent: (state, action) => {
-			state.parent = action.payload;
-		},
-		setTopHierarchy: (state, action) => {
-			state.topHierarchy = action.payload;
+		setHierarchyLevel: (state, action) => {
+			state.hierarchyLevel = action.payload;
 		},
 	},
 });
 
-export const {
-	setGrandparents,
-	setParents,
-	setChildren,
-	setGrandparent,
-	setParent,
-	setTopHierarchy,
-} = hierarchySlice.actions;
+export const { setCompany, setHierarchy, setHierarchyLevel } =
+	hierarchySlice.actions;
 
 export default hierarchySlice.reducer;

@@ -14,7 +14,7 @@ const CompaniesGrid = () => {
 			<Grid container spacing={15}>
 				{filteredCompanies.map(({ uuid, name, img_url }) => (
 					<Grid item key={uuid} xs={3}>
-						<CompanyItem uuid={uuid} title={name} imgUrl={img_url} />
+						<CompanyItem uuid={uuid} name={name} imgUrl={img_url} />
 					</Grid>
 				))}
 			</Grid>
