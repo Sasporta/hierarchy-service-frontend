@@ -16,11 +16,14 @@ export const company = Factory.extend({
 
 	img_url() {
 		const imgsCollection = {
-			1: 'https://brandmark.io/logo-rank/random/apple.png',
-			2: 'https://www.jetpunk.com/img/user-photo-library/d4/d450bd5b70-450.png',
-			3: 'https://cdn.icon-icons.com/icons2/1826/PNG/512/4202110facebooklogosocialsocialmedia-115707_115594.png',
+			1: 'https://www.drupal.org/files/styles/grid-4-2x/public/datadog-logo-purple.png?itok=1gen8ZoL',
+			2: 'https://static.vecteezy.com/system/resources/previews/003/399/771/original/youtube-icon-editorial-free-vector.jpg',
+			3: 'https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/folder_920_201707260845-1.png',
+			4: 'https://static.datadoghq.com/static/images/logos/amazon-web-services_large.svg?auto=format',
+			5: 'https://www.designevo.com/images/blog/blue-logos/intel-logo-blue.jpg',
+			6: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTRjzHIOImmmC60fs62WG4wdwnNU7tJXBwze17PXTkKja49o9QfGNAKJc_x56oITIKmS4&usqp=CAU',
 		};
 
-		return imgsCollection[faker.datatype.number({ min: 1, max: 3 })];
+		return imgsCollection[faker.datatype.number({ min: 1, max: 6 })];
 	},
 });
