@@ -7,7 +7,7 @@ import { apiReq } from '../utils/api';
 import { setHierarchy, setHierarchyLevel } from '../redux/hierarchy';
 
 const HierarchyItem = ({ uuid, name, title, level, chosen }) => {
-	const { hierarchy } = useSelector(({ hierarchyList }) => hierarchyList);
+	const { hierarchy } = useSelector(({ hierarchy }) => hierarchy);
 
 	const [noSubordinate, setNoSubordinate] = useState(false);
 
@@ -48,7 +48,11 @@ const HierarchyItem = ({ uuid, name, title, level, chosen }) => {
 	};
 
 	return (
-		<CardContainer elevation={10} onClick={onClick} lowest={noSubordinate}>
+		<CardContainer
+			elevation={10}
+			onClick={onClick}
+			lowest={noSubordinate}
+		>
 			{!chosen && <CardCover />}
 			<CardContent>
 				<CardLogo url={`https://robohash.org/${uuid}`}></CardLogo>

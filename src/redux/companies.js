@@ -3,10 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 export const companiesSlice = createSlice({
 	name: 'companies',
 	initialState: {
+		chosenCompany: null,
 		companies: [],
 		filteredCompanies: [],
 	},
 	reducers: {
+		setChosenCompany: (state, action) => {
+			state.chosenCompany = action.payload;
+		},
 		setCompanies: (state, action) => {
 			state.companies = action.payload;
 		},
@@ -16,6 +20,7 @@ export const companiesSlice = createSlice({
 	},
 });
 
-export const { setCompanies, setFilteredCompanies } = companiesSlice.actions;
+export const { setChosenCompany, setCompanies, setFilteredCompanies } =
+	companiesSlice.actions;
 
 export default companiesSlice.reducer;

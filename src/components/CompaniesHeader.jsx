@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import ContentBox from './ContentBox';
-const Header = () => (
+const CompaniesHeader = () => (
 	<HeaderLayout>
 		<HeaderContainer>
 			<ContentBox
@@ -16,18 +16,15 @@ const Header = () => (
 	</HeaderLayout>
 );
 
-export default Header;
-
-const HeaderLayout = styled.div`
-	display: flex;
-	align-items: center;
-	height: 360px;
-	margin-top: 65px;
-	padding: 60px 0 50px;
-`;
+export default CompaniesHeader;
 
 const HeaderContainer = styled.div`
-	margin: 0 auto;
+	padding: 50px;
+	text-align: center;
+`;
+
+const HeaderLayout = styled.div`
+	margin: 65px auto 0;
 	max-width: 1380px;
 	padding: 0 25px;
 `;

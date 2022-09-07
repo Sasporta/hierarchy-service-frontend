@@ -13,12 +13,11 @@ const About = () => (
 export default About;
 
 const AboutLayout = styled.div`
-	margin-top: 65px;
-	padding: 80px 0;
+	margin: 65px auto 0;
+	max-width: 1380px;
+	padding: 0 25px;
 `;
 
 const AboutContainer = styled.div`
-	margin: 0 auto;
-	max-width: 1380px;
-	padding: 0 25px;
+	padding: 50px;
 `;

@@ -4,4 +4,6 @@ export const models = {
 	company: Model,
 
 	employee: Model,
+
+	companyInfo: Model,
 };

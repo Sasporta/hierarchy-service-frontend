@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFilteredCompanies } from '../redux/companies';
 
 const CompanySearch = () => {
-	const { companies } = useSelector(({ companiesList }) => companiesList);
+	const { companies } = useSelector(({ companies }) => companies);
 
 	const [searchParams, setSearchParams] = useSearchParams();
 
@@ -50,10 +50,10 @@ const CompanySearch = () => {
 export default CompanySearch;
 
 const HeaderContainer = styled.div`
-	display: flex;
 	margin: 0 auto;
 	max-width: 1380px;
 	padding: 0 25px;
+	text-align: center;
 `;
 
 const Input = styled.input`

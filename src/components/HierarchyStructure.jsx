@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 
@@ -9,15 +8,8 @@ const WrappedHierarchyLevel = HOCSpinner(HierarchyLevel);
 
 const HierarchyStructure = () => {
 	const { hierarchy, hierarchyLevel } = useSelector(
-		({ hierarchyList }) => hierarchyList,
+		({ hierarchy }) => hierarchy,
 	);
-
-	useEffect(() => {
-		window.scrollTo({
-			top: window.pageYOffset + 230,
-			behavior: 'smooth',
-		});
-	}, [hierarchyLevel]);
 
 	return (
 		<HierarchyContainer>
@@ -37,6 +29,4 @@ export default HierarchyStructure;
 const HierarchyContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	position: relative;
-	top: calc(20vh - 165px);
 `;

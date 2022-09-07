@@ -3,38 +3,17 @@ import { Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { apiReq } from '../utils/api';
-import {
-	setCompany,
-	setHierarchy,
-	setHierarchyLevel,
-} from '../redux/hierarchy';
+import { setChosenCompany } from '../redux/companies';
 
 const CompanyItem = ({ uuid, name, imgUrl }) => {
 	const dispatch = useDispatch();
 
-	const onClick = async () => {
-		dispatch(setCompany({ uuid, name }));
-
-		dispatch(setHierarchyLevel(1));
-
-		dispatch(setHierarchy({ level: 1, employees: null }));
-
-		const employees = await apiReq(
-			`/employees?companyUuid=${uuid}&managerUuid=null`,
-		);
-
-		dispatch(
-			setHierarchy({
-				level: 1,
-				employees: employees.map(e => ({ level: 1, chosen: true, ...e })),
-			}),
-		);
-	};
-
 	return (
-		<Link to={`/hierarchy/${uuid}`}>
-			<CompanyContainer elevation={24} onClick={onClick}>
+		<Link
+			to={`/hierarchy/${uuid}`}
+			onClick={() => dispatch(setChosenCompany({ uuid, name }))}
+		>
+			<CompanyContainer elevation={24}>
 				<CompanyCover>{name}</CompanyCover>
 				<CompanyLogo url={imgUrl} />
 			</CompanyContainer>

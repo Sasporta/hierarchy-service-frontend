@@ -12,4 +12,10 @@ export const serializers = {
 		root: false,
 		attrs: ['uuid', 'name', 'title'],
 	}),
+
+	companyInfo: Serializer.extend({
+		embed: true,
+		root: false,
+		attrs: ['employeesMetadata'],
+	}),
 };

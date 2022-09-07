@@ -4,9 +4,8 @@ import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { apiReq } from '../utils/api';
-import Header from '../components/Header';
+import CompaniesHeader from '../components/CompaniesHeader';
 import HOCSpinner from '../components/HOCSpinner';
-import { setLoadingCompanies } from '../redux/loading';
 import CompaniesGrid from '../components/CompaniesGrid';
 import CompanySearch from '../components/CompanySearch';
 import { setCompanies, setFilteredCompanies } from '../redux/companies';
@@ -14,11 +13,7 @@ import { setCompanies, setFilteredCompanies } from '../redux/companies';
 const WrappedCompaniesGrid = HOCSpinner(CompaniesGrid);
 
 const Home = () => {
-	const { companies } = useSelector(({ companiesList }) => companiesList);
-
-	const { loadingCompanies } = useSelector(
-		({ loadingProcess }) => loadingProcess,
-	);
+	const { companies } = useSelector(({ companies }) => companies);
 
 	const [searchParams] = useSearchParams();
 
@@ -29,8 +24,6 @@ const Home = () => {
 			const fetchedCompanies = await apiReq('/companies');
 
 			dispatch(setCompanies(fetchedCompanies));
-
-			dispatch(setLoadingCompanies(false));
 		};
 
 		fetchCompanies();
@@ -38,7 +31,6 @@ const Home = () => {
 
 	useEffect(() => {
 		const query = searchParams.get('searchQuery') || '';
-		console.log(query);
 		dispatch(
 			setFilteredCompanies(
 				companies.filter(c =>
@@ -50,10 +42,10 @@ const Home = () => {
 
 	return (
 		<>
-			<Header />
+			<CompaniesHeader />
 			<ContentBuffer>Uuuuuuh look at those shiny companies ✨ ⬇️</ContentBuffer>
 			<CompanySearch />
-			<WrappedCompaniesGrid loading={loadingCompanies} />
+			<WrappedCompaniesGrid loading={!companies.length} />
 		</>
 	);
 };

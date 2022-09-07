@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Home from './pages/Home';
 import About from './pages/About';
+import Metadata from './pages/Metadata';
 import NavBar from './components/NavBar';
 import Hierarchy from './pages/Hierarchy';
 import PageNotFound from './components/PageNotFound';
@@ -14,6 +15,7 @@ const App = () => (
 			<Route path="/" element={<Home />} />
 			<Route path="/home" element={<Home />} />
 			<Route path="/about" element={<About />} />
+			<Route path="/metadata/:companyUuid" element={<Metadata />} />
 			<Route path="/hierarchy/:companyUuid" element={<Hierarchy />} />
 			<Route path="*" element={<PageNotFound />} />
 		</Routes>
