@@ -23,7 +23,7 @@ const Home = () => {
 		const fetchCompanies = async () => {
 			const fetchedCompanies = await apiReq('/companies');
 
-			dispatch(setCompanies(fetchedCompanies));
+			fetchedCompanies && dispatch(setCompanies(fetchedCompanies));
 		};
 
 		fetchCompanies();

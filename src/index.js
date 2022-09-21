@@ -6,8 +6,12 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './App';
-import '../src/mockAPI/server';
 import store from './redux/store';
+import { makeServer } from '../src/mockAPI/server';
+
+if (process.env.REACT_APP_ENV === 'mock') {
+	makeServer({ environment: 'mock' });
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
