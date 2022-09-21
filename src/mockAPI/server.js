@@ -7,5 +7,5 @@ import { factories } from './factories';
 import { serializers } from './serializers';
 
 export const makeServer = ({ environment = 'test' }) => {
-	createServer({ environment, models, routes, factories, seeds, serializers });
+  createServer({ environment, models, routes, factories, seeds, serializers });
 };

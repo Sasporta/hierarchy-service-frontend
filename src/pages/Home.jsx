@@ -13,51 +13,51 @@ import { setCompanies, setFilteredCompanies } from '../redux/companies';
 const WrappedCompaniesGrid = HOCSpinner(CompaniesGrid);
 
 const Home = () => {
-	const { companies } = useSelector(({ companies }) => companies);
+  const { companies } = useSelector(({ companies }) => companies);
 
-	const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	useEffect(() => {
-		const fetchCompanies = async () => {
-			const fetchedCompanies = await apiReq('/companies');
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      const fetchedCompanies = await apiReq('/companies');
 
-			fetchedCompanies && dispatch(setCompanies(fetchedCompanies));
-		};
+      fetchedCompanies && dispatch(setCompanies(fetchedCompanies));
+    };
 
-		fetchCompanies();
-	}, []);
+    fetchCompanies();
+  }, []);
 
-	useEffect(() => {
-		const query = searchParams.get('searchQuery') || '';
-		dispatch(
-			setFilteredCompanies(
-				companies.filter(c =>
-					c.name.toLowerCase().includes(query.toLowerCase()),
-				),
-			),
-		);
-	}, [companies]);
+  useEffect(() => {
+    const query = searchParams.get('searchQuery') || '';
+    dispatch(
+      setFilteredCompanies(
+        companies.filter(c =>
+          c.name.toLowerCase().includes(query.toLowerCase()),
+        ),
+      ),
+    );
+  }, [companies]);
 
-	return (
-		<>
-			<CompaniesHeader />
-			<ContentBuffer>Uuuuuuh look at those shiny companies ✨ ⬇️</ContentBuffer>
-			<CompanySearch />
-			<WrappedCompaniesGrid loading={!companies.length} />
-		</>
-	);
+  return (
+    <>
+      <CompaniesHeader />
+      <ContentBuffer>Uuuuuuh look at those shiny companies ✨ ⬇️</ContentBuffer>
+      <CompanySearch />
+      <WrappedCompaniesGrid loading={!companies.length} />
+    </>
+  );
 };
 
 export default Home;
 
 const ContentBuffer = styled.div`
-	background: #222;
-	color: #eee;
-	font-size: 14px;
-	font-weight: bold;
-	text-align: center;
-	margin-bottom: 80px;
-	padding: 5px;
+  background: #222;
+  color: #eee;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 80px;
+  padding: 5px;
 `;

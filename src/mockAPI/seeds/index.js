@@ -3,9 +3,9 @@ import { seedEmployees } from './employees';
 import { seedEmployeeInfo } from './employeesInfo';
 
 export const seeds = server => {
-	seedCompanies(server);
+  seedCompanies(server);
 
   seedEmployees(server);
 
-	seedEmployeeInfo(server);
+  seedEmployeeInfo(server);
 };

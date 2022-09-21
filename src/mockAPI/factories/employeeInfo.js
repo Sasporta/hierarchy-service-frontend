@@ -4,15 +4,15 @@ import { faker } from '@faker-js/faker';
 import { company1Uuid } from '../seeds/companies';
 
 export const employeeInfo = Factory.extend({
-	_id() {
-		return faker.datatype.uuid();
-	},
+  _id() {
+    return faker.datatype.uuid();
+  },
 
-	companyUuid() {
-		return company1Uuid;
-	},
+  companyUuid() {
+    return company1Uuid;
+  },
 
-	subordinatesCount() {
-		return faker.datatype.number({ min: 0, max: 5 });
-	},
+  subordinatesCount() {
+    return faker.datatype.number({ min: 0, max: 5 });
+  },
 });

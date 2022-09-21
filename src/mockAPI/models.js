@@ -1,9 +1,9 @@
 import { Model } from 'miragejs';
 
 export const models = {
-	company: Model,
+  company: Model,
 
-	employee: Model,
+  employee: Model,
 
-	employeeInfo: Model,
+  employeeInfo: Model,
 };
