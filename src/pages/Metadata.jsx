@@ -37,19 +37,25 @@ const Metadata = () => {
 		const fetchEmployees = async () => {
 			const promise1 = apiReq(`/employees?companyUuid=${chosenCompany.uuid}`);
 
-			const promise2 = apiReq(`/companiesMetadata/${chosenCompany.uuid}`);
+			const promise2 = apiReq(
+				`/employeesMetadata/?companyUuid=${chosenCompany.uuid}`,
+			);
 
-			const [employees, companyMetadata] = await Promise.all([
+			const [employees, employeesMetadata] = await Promise.all([
 				promise1,
 				promise2,
 			]);
+
+			const metadataObj = employeesMetadata.reduce(
+				(a, c) => ({ ...a, [c._id]: c.subordinatesCount }),
+				{},
+			);
 
 			dispatch(
 				setEmployees(
 					employees.map(e => ({
 						...e,
-						subordinates:
-							companyMetadata.employeesMetadata[e.uuid]?.subordinates,
+						subordinatesCount: metadataObj[e.uuid],
 					})),
 				),
 			);

@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
-import { useParams } from 'react-router-dom';
 import TableRow from '@mui/material/TableRow';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
@@ -24,7 +22,7 @@ const MetadataTable = () => {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{employees.map(({ uuid, name, subordinates }) => (
+					{employees.map(({ uuid, name, subordinatesCount }) => (
 						<TableRow
 							key={uuid}
 							sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -32,7 +30,7 @@ const MetadataTable = () => {
 							<TableCell component="th" scope="row">
 								{name}
 							</TableCell>
-							<TableCell align="center">{subordinates}</TableCell>
+							<TableCell align="center">{subordinatesCount}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

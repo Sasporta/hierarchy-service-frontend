@@ -5,5 +5,5 @@ export const models = {
 
 	employee: Model,
 
-	companyInfo: Model,
+	employeeInfo: Model,
 };

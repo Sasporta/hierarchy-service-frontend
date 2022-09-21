@@ -1,5 +1,5 @@
 import { company } from './company';
 import { employee } from './employee';
-import { companyInfo } from './companyInfo';
+import { employeeInfo } from './employeeInfo';
 
-export const factories = { company, employee, companyInfo };
+export const factories = { company, employee, employeeInfo };

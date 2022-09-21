@@ -13,9 +13,9 @@ export const serializers = {
 		attrs: ['uuid', 'name', 'title'],
 	}),
 
-	companyInfo: Serializer.extend({
+	employeeInfo: Serializer.extend({
 		embed: true,
 		root: false,
-		attrs: ['employeesMetadata'],
+		attrs: ['_id', 'subordinatesCount'],
 	}),
 };
