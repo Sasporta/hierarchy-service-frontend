@@ -1,15 +1,20 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { apiReq } from '../utils/api';
-import { setHierarchy, setHierarchyLevel } from '../redux/hierarchy';
+import { useFetchData } from '../hooks/useFetchData';
+import {
+  setHierarchy,
+  setHierarchyLevel,
+  setNoSubordinatesList,
+} from '../redux/hierarchy';
 
 const HierarchyItem = ({ uuid, name, title, level, chosen }) => {
-  const { hierarchy } = useSelector(({ hierarchy }) => hierarchy);
+  const { hierarchy, noSubordinatesList } = useSelector(
+    ({ hierarchy }) => hierarchy,
+  );
 
-  const [noSubordinate, setNoSubordinate] = useState(false);
+  const fetchData = useFetchData();
 
   const dispatch = useDispatch();
 
@@ -17,22 +22,18 @@ const HierarchyItem = ({ uuid, name, title, level, chosen }) => {
     dispatch(
       setHierarchy({
         level,
-        employees: hierarchy[level].map(e => {
-          return e.uuid === uuid
-            ? { ...e, chosen: true }
-            : { ...e, chosen: false };
-        }),
+        employees: hierarchy[level].map(e =>
+          e.uuid === uuid ? { ...e, chosen: true } : { ...e, chosen: false },
+        ),
       }),
     );
 
-    if (!noSubordinate) {
-      dispatch(setHierarchy({ level: level + 1, employees: null }));
-
+    if (!noSubordinatesList[uuid]) {
       dispatch(setHierarchyLevel(level + 1));
 
-      const employees = await apiReq(`/employees?managerUuid=${uuid}`);
+      const employees = await fetchData(`/employees?managerUuid=${uuid}`);
 
-      employees.length === 0 && setNoSubordinate(true);
+      employees.length === 0 && dispatch(setNoSubordinatesList(uuid));
 
       dispatch(
         setHierarchy({
@@ -48,7 +49,11 @@ const HierarchyItem = ({ uuid, name, title, level, chosen }) => {
   };
 
   return (
-    <CardContainer elevation={10} onClick={onClick} lowest={noSubordinate}>
+    <CardContainer
+      elevation={10}
+      onClick={onClick}
+      lowest={!!noSubordinatesList[uuid]}
+    >
       {!chosen && <CardCover />}
       <CardContent>
         <CardLogo url={`https://robohash.org/${uuid}`}></CardLogo>

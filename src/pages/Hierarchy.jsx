@@ -3,21 +3,24 @@ import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { apiReq } from '../utils/api';
 import HOCSpinner from '../components/HOCSpinner';
+import { useFetchData } from '../hooks/useFetchData';
+import { setChosenCompany } from '../redux/companies';
 import HierarchyHeader from '../components/HierarchyHeader';
 import HierarchyStructure from '../components/HierarchyStructure';
-import { setChosenCompany } from '../redux/companies';
 import { setHierarchy, setHierarchyLevel } from '../redux/hierarchy';
 
 const WrappedHierarchyTitle = HOCSpinner(HierarchyHeader);
 
 const Hierarchy = () => {
-  const { hierarchyLevel } = useSelector(({ hierarchy }) => hierarchy);
-
-  const { chosenCompany } = useSelector(({ companies }) => companies);
+  const {
+    companies: { chosenCompany },
+    hierarchy: { hierarchyLevel },
+  } = useSelector(state => state);
 
   const { companyUuid } = useParams();
+
+  const fetchData = useFetchData();
 
   const dispatch = useDispatch();
 
@@ -36,7 +39,7 @@ const Hierarchy = () => {
 
   useEffect(() => {
     const fetchCompany = async () => {
-      const fetchedCompany = await apiReq(`/companies/${companyUuid}`);
+      const fetchedCompany = await fetchData(`/companies/${companyUuid}`);
 
       dispatch(setChosenCompany(fetchedCompany));
     };
@@ -50,7 +53,7 @@ const Hierarchy = () => {
 
       dispatch(setHierarchy({ level: 1, employees: null }));
 
-      const employees = await apiReq(
+      const employees = await fetchData(
         `/employees?companyUuid=${chosenCompany.uuid}&managerUuid=null`,
       );
 

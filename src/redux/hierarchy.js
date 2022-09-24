@@ -5,6 +5,7 @@ export const hierarchySlice = createSlice({
   initialState: {
     hierarchy: {},
     hierarchyLevel: null,
+    noSubordinatesList: {},
   },
   reducers: {
     setHierarchy: (state, { payload }) => {
@@ -13,9 +14,13 @@ export const hierarchySlice = createSlice({
     setHierarchyLevel: (state, action) => {
       state.hierarchyLevel = action.payload;
     },
+    setNoSubordinatesList: (state, action) => {
+      state.noSubordinatesList[action.payload] = true;
+    },
   },
 });
 
-export const { setHierarchy, setHierarchyLevel } = hierarchySlice.actions;
+export const { setHierarchy, setHierarchyLevel, setNoSubordinatesList } =
+  hierarchySlice.actions;
 
 export default hierarchySlice.reducer;

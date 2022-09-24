@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { apiReq } from '../utils/api';
 import { setEmployees } from '../redux/metadata';
 import HOCSpinner from '../components/HOCSpinner';
+import { useFetchData } from '../hooks/useFetchData';
 import { setChosenCompany } from '../redux/companies';
 import MetadataTable from '../components/MetadataTable';
 import MetadataHeader from '../components/MetadataHeader';
@@ -15,17 +15,20 @@ const WrappedHierarchyTitle = HOCSpinner(MetadataHeader);
 const WrappedMetadataTable = HOCSpinner(MetadataTable);
 
 const Metadata = () => {
-  const { chosenCompany } = useSelector(({ companies }) => companies);
-
-  const { employees } = useSelector(({ metadata }) => metadata);
+  const {
+    metadata: { employees },
+    companies: { chosenCompany },
+  } = useSelector(state => state);
 
   const { companyUuid } = useParams();
+
+  const fetchData = useFetchData();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchCompany = async () => {
-      const fetchedCompany = await apiReq(`/companies/${companyUuid}`);
+      const fetchedCompany = await fetchData(`/companies/${companyUuid}`);
 
       dispatch(setChosenCompany(fetchedCompany));
     };
@@ -35,9 +38,11 @@ const Metadata = () => {
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const promise1 = apiReq(`/employees?companyUuid=${chosenCompany.uuid}`);
+      const promise1 = fetchData(
+        `/employees?companyUuid=${chosenCompany.uuid}`,
+      );
 
-      const promise2 = apiReq(
+      const promise2 = fetchData(
         `/employeesMetadata/?companyUuid=${chosenCompany.uuid}`,
       );
 
@@ -61,9 +66,7 @@ const Metadata = () => {
       );
     };
 
-    if (chosenCompany) {
-      fetchEmployees();
-    }
+    chosenCompany && fetchEmployees();
   }, [chosenCompany]);
 
   return (

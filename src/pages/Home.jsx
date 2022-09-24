@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { apiReq } from '../utils/api';
-import CompaniesHeader from '../components/CompaniesHeader';
 import HOCSpinner from '../components/HOCSpinner';
+import { useFetchData } from '../hooks/useFetchData';
 import CompaniesGrid from '../components/CompaniesGrid';
 import CompanySearch from '../components/CompanySearch';
+import CompaniesHeader from '../components/CompaniesHeader';
 import { setCompanies, setFilteredCompanies } from '../redux/companies';
 
 const WrappedCompaniesGrid = HOCSpinner(CompaniesGrid);
@@ -17,11 +17,13 @@ const Home = () => {
 
   const [searchParams] = useSearchParams();
 
+  const fetchData = useFetchData();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchCompanies = async () => {
-      const fetchedCompanies = await apiReq('/companies');
+      const fetchedCompanies = await fetchData('/companies');
 
       fetchedCompanies && dispatch(setCompanies(fetchedCompanies));
     };
@@ -31,6 +33,7 @@ const Home = () => {
 
   useEffect(() => {
     const query = searchParams.get('searchQuery') || '';
+
     dispatch(
       setFilteredCompanies(
         companies.filter(c =>
